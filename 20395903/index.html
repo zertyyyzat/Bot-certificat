@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Certificate of Authenticity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@400;600&family=Alfa+Slab+One&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{background:#e0e0e0;font-family:'Open Sans',Arial,sans-serif;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:30px 15px 60px}
+    .cert-outer{background:#fff;border:6px solid #D4A017;max-width:920px;width:100%;position:relative;overflow:hidden}
+    .binary-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;width:100%;height:100%}
+    .binary-bg span{display:block;font-family:monospace;font-size:7px;color:#d2d2d2;letter-spacing:0.5px;line-height:1.4;white-space:nowrap;width:100%}
+    .cert-inner{position:relative;z-index:1;padding:26px 32px 22px}
+    .cert-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}
+    .brand-logo{font-family:'Alfa Slab One',serif;font-size:28px;font-weight:400;color:#888;letter-spacing:0px;text-transform:lowercase}
+    .cert-title{font-family:'Oswald',sans-serif;font-size:28px;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;color:#1a1a1a;flex:1;text-align:center}
+    .photo-wrap{position:relative;width:245px;height:265px}
+    .photo-watermark{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;color:rgba(255,255,255,0.85);text-shadow:0 1px 4px rgba(0,0,0,0.7);letter-spacing:2px;pointer-events:none}
+    .verified-badge{width:80px;height:80px;border:3px solid #D4A017;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;flex-shrink:0}
+    .verified-badge::after{content:"";position:absolute;inset:5px;border-radius:50%;border:1.5px dashed #D4A017}
+    .vb-top{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:#777;font-weight:600}
+    .vb-check{font-size:28px;color:#D4A017;line-height:1}
+    .vb-bottom{font-size:8.5px;letter-spacing:1px;text-transform:lowercase;color:#777;font-weight:700;font-family:'Oswald',sans-serif}
+    .cert-body{display:flex;gap:26px;align-items:flex-start}
+    .photos-col{flex-shrink:0}
+    .main-photo{width:245px;height:265px;object-fit:cover;border:1px solid #ccc;display:block;background:#f5f5f5}
+    .main-photo-placeholder{width:245px;height:265px;background:#f0f0f0;border:1px solid #ccc;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:13px}
+    .thumb-row{display:flex;gap:5px;margin-top:7px}
+    .thumb{width:82px;height:70px;object-fit:cover;border:2.5px solid #D4A017;cursor:pointer;transition:opacity .15s}
+    .thumb:hover{opacity:.85}
+    .thumb.inactive{border-color:#ccc}
+    .thumb-placeholder{width:82px;height:70px;background:#f0f0f0;border:2px solid #ccc}
+    .fields-col{flex:1;display:flex;flex-direction:column}
+    .field-row{display:flex;align-items:stretch;border-bottom:1px solid #e2e2e2}
+    .field-row:first-child{border-top:1px solid #e2e2e2}
+    .field-label{width:170px;flex-shrink:0;font-size:12.5px;color:#555;padding:12px 14px 12px 0}
+    .field-value{flex:1;font-size:13px;font-weight:600;color:#1a1a1a;padding:12px 0;word-break:break-all}
+    .field-value.link a{color:#1565a8;text-decoration:none}
+    .field-value.link a:hover{text-decoration:underline}
+    .cert-footer{margin-top:20px;display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+    .disclaimer-block{flex:1}
+    .disclaimer-line{font-size:10.5px;color:#555;line-height:1.6;margin-bottom:2px}
+    .disclaimer-line a{color:#1565a8;text-decoration:none}
+    .fine-print{font-size:9.5px;color:#888;line-height:1.55;margin-top:7px}
+    .qr-block{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:6px}
+    .qr-img{width:96px;height:96px;border:1px solid #ddd}
+    .qr-caption{font-size:9.5px;color:#666;text-align:center;max-width:112px;line-height:1.4}
+    .action-bar{display:flex;gap:14px;justify-content:center;margin-top:24px}
+    .btn{padding:11px 36px;font-family:'Oswald',sans-serif;font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:none;border-radius:3px;cursor:pointer;transition:opacity .15s}
+    .btn:hover{opacity:.82}
+    .btn-dark{background:#1a1a1a;color:#fff}
+    .btn-gold{background:#D4A017;color:#fff}
+    @media print{body{background:#fff;padding:0}.action-bar{display:none}}
+  </style>
+</head>
+<body>
+<div class="cert-outer">
+  <div class="binary-bg" id="binaryBg"></div>
+  <div class="cert-inner">
+    <div class="cert-header">
+      <div class="brand-logo">entrupy</div>
+      <div class="cert-title">Certificate of Authenticity</div>
+      <div class="verified-badge">
+        <span class="vb-top">VERIFIED BY</span>
+        <span class="vb-check">✔</span>
+        <span class="vb-bottom">entrupy</span>
+      </div>
+    </div>
+    <div class="cert-body">
+      <div class="photos-col">
+        <div class="photo-wrap"><img class="main-photo" id="mainPhoto" src="https://cert-entrupy.pages.dev//photos/20395903_photo1.png" alt="Photo 1"/><div class="photo-watermark">20395903</div></div>
+        <div class="thumb-row"><img class="thumb" src="https://cert-entrupy.pages.dev//photos/20395903_photo1.png" alt="t1" onclick="setMain(this)"/><div class="thumb-placeholder"></div></div>
+      </div>
+      <div class="fields-col">
+        <div class="field-row"><span class="field-label">Certificate Holder</span><span class="field-value">test</span></div>
+        <div class="field-row"><span class="field-label">Brand</span><span class="field-value">test</span></div>
+        <div class="field-row"><span class="field-label">Material</span><span class="field-value">test</span></div>
+        <div class="field-row"><span class="field-label">Certificate Link</span><span class="field-value link"><a href="https://cert-entrupy.pages.dev//20395903">https://cert-entrupy.pages.dev//20395903</a></span></div>
+        <div class="field-row"><span class="field-label">Certificate Issued At</span><span class="field-value">01/04/2027</span></div>
+        <div class="field-row"><span class="field-label">Identifier</span><span class="field-value">RK2053</span></div>
+      </div>
+    </div>
+    <div class="cert-footer">
+      <div class="disclaimer-block">
+        <div class="disclaimer-line">Entrupy provides a financial guarantee for this certificate. For more information visit <a href="https://entrupy.com/guarantee">entrupy.com/guarantee</a></div>
+        <div class="disclaimer-line">Entrupy offers additional protection plans through XCover.</div>
+        <div class="fine-print">Entrupy is not sponsored by or affiliated with any of the designers listed on the Entrupy website. Entrupy's authentication service is based solely on Entrupy's detection algorithm, and the database relied upon is not based upon data provided by any of the designers listed on the Entrupy website. The designers listed on the Entrupy website or application are neither responsible for nor bound by any of Entrupy's findings and may not honor any certificates of authenticity provided by Entrupy.</div>
+      </div>
+      <div class="qr-block">
+        <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=96x96&data=https://cert-entrupy.pages.dev//20395903" alt="QR"/>
+        <div class="qr-caption">Scan the QR code to verify the authenticity of the certificate.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="action-bar">
+  <button class="btn btn-dark" onclick="window.print()">PRINT</button>
+  <button class="btn btn-dark" onclick="shareLink()">SHARE</button>
+  <button class="btn btn-gold">PROTECT YOUR PURCHASE</button>
+</div>
+<script>
+  (function(){
+    const bg=document.getElementById("binaryBg");
+    const row="00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 ";
+    let html="";
+    const h = bg.parentElement.offsetHeight || 800;
+    const lines = Math.ceil(h / 10) + 10;
+    for(let i=0;i<lines;i++){
+      html+=`<span>${row.repeat(3)}</span>`;
+    }
+    bg.innerHTML=html;
+  })();
+  function setMain(el){
+    const m=document.getElementById("mainPhoto");
+    if(!m)return;
+    m.src=el.src;
+    document.querySelectorAll(".thumb").forEach(t=>t.classList.add("inactive"));
+    el.classList.remove("inactive");
+  }
+  function shareLink(){
+    if(navigator.share){navigator.share({title:"Certificate of Authenticity",url:location.href});}
+    else{navigator.clipboard.writeText(location.href).then(()=>alert("Lien copié !"));}
+  }
+</script>
+</body>
+</html>
