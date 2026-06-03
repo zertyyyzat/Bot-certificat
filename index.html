@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Certificate Verification</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:#e0e0e0;font-family:'Open Sans',sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+    .box{background:#fff;border:6px solid #D4A017;max-width:480px;width:100%;padding:40px 36px;text-align:center}
+    .logo{font-family:'Oswald',sans-serif;font-size:32px;color:#555;text-transform:lowercase;margin-bottom:6px}
+    .logo em{font-style:italic}
+    h1{font-family:'Oswald',sans-serif;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:#1a1a1a;margin-bottom:28px}
+    input{width:100%;border:1.5px solid #ccc;padding:12px 14px;font-size:15px;font-family:'Open Sans',sans-serif;margin-bottom:14px;outline:none}
+    input:focus{border-color:#D4A017}
+    button{width:100%;background:#D4A017;color:#fff;border:none;padding:13px;font-family:'Oswald',sans-serif;font-size:15px;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
+    button:hover{opacity:.88}
+    .note{font-size:11px;color:#888;margin-top:14px}
+  </style>
+</head>
+<body>
+<div class="box">
+  <div class="logo"><em>en</em>trupy</div>
+  <h1>Verify a Certificate</h1>
+  <input type="text" id="certId" placeholder="Enter certificate ID (ex: 8492037)" maxlength="12"/>
+  <button onclick="verify()">Verify</button>
+  <div class="note">Enter the identifier shown on the certificate</div>
+</div>
+<script>
+  function verify(){
+    const id = document.getElementById("certId").value.trim();
+    if(id) window.location.href = "/" + id;
+  }
+  document.getElementById("certId").addEventListener("keydown", e => {
+    if(e.key === "Enter") verify();
+  });
+</script>
+</body>
+</html>
